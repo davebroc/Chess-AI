@@ -58,16 +58,16 @@ const Game: React.FC = () => {
     }
 
     return (
-        <div>
-            <Chessboard
-                position={fen}
-                allowDrag={(move) => allowDrag(move.piece)}
-                onDrop={(move) => handleMove(move.sourceSquare, move.targetSquare)}
-            />
-            <div id="status">{status}</div>
-            <div id="fen">{fen}</div>
-            <div id="pgn">{pgn}</div>
-        </div>
+        <div className='board'>
+            <div>
+                <Chessboard
+                    position={fen}
+                    allowDrag={(move) => allowDrag(move.piece)}
+                    onDrop={(move) => handleMove(move.sourceSquare, move.targetSquare)}
+                />
+                <h3 id="status">{status}</h3>
+            </div>
+        </div >
     );
 };
 

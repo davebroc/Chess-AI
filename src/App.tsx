@@ -6,7 +6,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <main>
-        <div id="myBoard" ></div>
+        <h1>Cheeky Ai Chess</h1>
 
         <Game />
       </main>
