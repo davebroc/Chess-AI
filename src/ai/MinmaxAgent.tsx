@@ -14,7 +14,7 @@ class MinmaxAgent implements Agent {
         "b": 30,
         "r": 50,
         "q": 90,
-        "k": 900,
+        "k": 200,
     };
 
     constructor(props: AgentProps) {
@@ -28,7 +28,6 @@ class MinmaxAgent implements Agent {
     public move(): void {
         if (!this.game.isGameOver() && !this.game.isCheckmate()) {
             const bestMove = this.getBestMove(this.game);
-            console.log(this.game.board());
 
             this.game.move(bestMove);
             this.updateState();
@@ -45,7 +44,9 @@ class MinmaxAgent implements Agent {
         for (const move of legalMoves) {
             game.move(move);
 
-            let value = this.visited.get(game.fen()) ?? this.minimax(game, this.maxDepth, false);
+            let value = this.visited.get(game.fen())
+                ?? this.minimax(game, this.maxDepth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
+
             if (!this.visited.has(game.fen()))
                 this.visited.set(game.fen(), value)
 
@@ -62,9 +63,9 @@ class MinmaxAgent implements Agent {
 
     public evalBoard(game: Chess): number {
         if (game.isCheckmate() && game.turn() === this.color)
-            return -100
+            return -200
         else if (game.isCheckmate())
-            return 100
+            return 200
 
 
         let score = 0
@@ -85,7 +86,7 @@ class MinmaxAgent implements Agent {
     }
 
 
-    private minimax(game: Chess, depth: number, maximizingPlayer: boolean): number {
+    private minimax(game: Chess, depth: number, alpha: number, beta: number, maximizingPlayer: boolean): number {
         if (depth === 0 || game.isGameOver())
             return this.evalBoard(game);
 
@@ -96,9 +97,13 @@ class MinmaxAgent implements Agent {
 
             for (const move of legalMoves) {
                 game.move(move);
-                const score = this.minimax(game, depth - 1, false);
+                const score = this.minimax(game, depth - 1, alpha, beta, false);
                 game.undo();
                 maxEval = Math.max(maxEval, score);
+                alpha = Math.max(alpha, score);
+
+                if (beta <= alpha)
+                    break; // Beta cut-off
             }
 
             return maxEval;
@@ -107,15 +112,22 @@ class MinmaxAgent implements Agent {
 
             for (const move of legalMoves) {
                 game.move(move);
-                const score = this.minimax(game, depth - 1, true);
+                const score = this.minimax(game, depth - 1, alpha, beta, true);
                 game.undo();
                 minEval = Math.min(minEval, score);
+                beta = Math.min(beta, score);
+
+                if (beta <= alpha)
+                    break; // Alpha cut-off
             }
 
             return minEval;
         }
     }
 
+
 }
 
 export default MinmaxAgent;
+
+

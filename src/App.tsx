@@ -7,7 +7,6 @@ const App: React.FC = () => {
     <div className="App">
       <main>
         <h1>Cheeky Ai Chess</h1>
-
         <Game />
       </main>
     </div>
