@@ -14,7 +14,7 @@ class MinmaxAgent implements Agent {
         "b": 30,
         "r": 50,
         "q": 90,
-        "k": 200,
+        "k": 150,
     };
 
     constructor(props: AgentProps) {
