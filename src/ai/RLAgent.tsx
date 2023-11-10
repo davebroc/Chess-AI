@@ -9,25 +9,24 @@ const AgentImplementation: React.FC<AgentProps> = ({
     isHumanTurn,
     setIsHumanTurn,
     updateState,
-    setPgn,
 }) => {
     useEffect(() => {
         if (!isHumanTurn) {
-            makeMove();
+            // makeMove();
         }
     }, [isHumanTurn]);
 
-    const makeMove = () => {
-        const bestMove = getBestMove();
-        game.move(bestMove);
-        setGame(new Chess(game.fen()));
-        updateState();
-        setPgn(game.pgn());
-        setIsHumanTurn(true);
-    };
+    // const makeMove = () => {
+    //     const bestMove = getBestMove();
+    //     game.move(bestMove);
+    //     setGame(new Chess(game.fen()));
+    //     updateState();
+    //     setPgn(game.pgn());
+    //     setIsHumanTurn(true);
+    // };
 
-    const getBestMove = (): string => {
-    };
+    // const getBestMove = (): string => {
+    // };
 
     const evalBoard = (board: Board): number => {
         return 0;

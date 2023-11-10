@@ -8,7 +8,7 @@ const Game: React.FC = () => {
     const [status, setStatus] = useState<string>('');
     const [fen, setFen] = useState<string>('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');// Start state
     const [pgn, setPgn] = useState<string>('');
-    const [isHumanTurn, setIsHumanTurn] = useState(false);// switched for initilisation
+    const [isHumanTurn, setIsHumanTurn] = useState(true);// switched for initilisation
 
     React.useEffect(() => {
         updateState();
@@ -34,7 +34,6 @@ const Game: React.FC = () => {
 
         setFen(game.fen())
         setPgn(game.pgn())
-        setIsHumanTurn(!isHumanTurn)
         setStatus(statusText)
     }
 
@@ -46,8 +45,10 @@ const Game: React.FC = () => {
                 promotion: 'q'
             });
         } catch (error) { // illegal move
+            return
         }
 
+        setIsHumanTurn(false)
         updateState()
     }
 
@@ -79,7 +80,6 @@ const Game: React.FC = () => {
                     isHumanTurn={isHumanTurn}
                     setIsHumanTurn={setIsHumanTurn}
                     updateState={updateState}
-                    setPgn={setPgn}
                 />
             </div>
         </div >
