@@ -5,7 +5,7 @@ class MinmaxAgent implements Agent {
     private game: Chess;
     private setIsHumanTurn: React.Dispatch<React.SetStateAction<boolean>>;
     private updateState: () => void;
-    private maxDepth = 2;
+    private maxDepth = 4;
     private color: string;
     private visited: Map<string, number>
 
