@@ -1,5 +1,6 @@
 import { Chess } from 'chess.js';
 import { AgentProps, Agent } from './Agent';
+import Board from '../components/Board';
 
 class RandomAgent implements Agent {
     private game: Chess;
@@ -23,6 +24,12 @@ class RandomAgent implements Agent {
             this.setIsHumanTurn(true);
         }
     }
+
+    public evalBoard(board: Board): number {
+        return 0;
+    }
+
+
 }
 
 export default RandomAgent;
