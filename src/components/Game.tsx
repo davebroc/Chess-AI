@@ -8,9 +8,11 @@ const Game: React.FC = () => {
     const [status, setStatus] = useState<string>('');
     const [fen, setFen] = useState<string>('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');// Start state
     const [pgn, setPgn] = useState<string>('');
+    const [isMobile, setIsMobile] = useState<boolean>();
     const [isHumanTurn, setIsHumanTurn] = useState(true);// switched for initilisation
 
     React.useEffect(() => {
+        setIsMobile(window.innerWidth < 555)
         updateState();
     }, []);
 
@@ -63,6 +65,7 @@ const Game: React.FC = () => {
         }
         game.board()
         return true
+
     }
 
     return (
@@ -72,6 +75,7 @@ const Game: React.FC = () => {
                     position={fen}
                     allowDrag={(move) => allowDrag(move.piece)}
                     onDrop={(move) => handleMove(move.sourceSquare, move.targetSquare)}
+                    width={isMobile ? 300 : undefined}
                 />
                 <h3 id="status">{status}</h3>
                 <Agent
