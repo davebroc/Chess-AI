@@ -8,6 +8,14 @@ class MinmaxAgent implements Agent {
     private maxDepth = 2;
     private color: string;
     private visited: Map<string, number>
+    private pieceValues: { [key: string]: number } = {
+        "p": 10,
+        "n": 30,
+        "b": 30,
+        "r": 50,
+        "q": 90,
+        "k": 900,
+    };
 
     constructor(props: AgentProps) {
         this.game = props.game;
@@ -20,6 +28,7 @@ class MinmaxAgent implements Agent {
     public move(): void {
         if (!this.game.isGameOver() && !this.game.isCheckmate()) {
             const bestMove = this.getBestMove(this.game);
+            console.log(this.game.board());
 
             this.game.move(bestMove);
             this.updateState();
@@ -57,7 +66,22 @@ class MinmaxAgent implements Agent {
         else if (game.isCheckmate())
             return 100
 
-        return 0;
+
+        let score = 0
+        game.board().forEach(row => {
+            row.forEach(col => {
+                if (!col)
+                    return
+                let value = this.pieceValues[col?.type]
+                if (col.color !== this.color)
+                    value = -value
+                score += value
+            })
+
+        })
+
+
+        return score;
     }
 
 
